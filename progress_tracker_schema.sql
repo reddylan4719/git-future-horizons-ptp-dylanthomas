@@ -5,11 +5,11 @@ use progress_tracker;
 
 create table users
 (
-	user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE,
     first_name VARCHAR(50) NOT NULL,
     last_name varchar(50) not null,
-    username varchar(255),
-    password varchar(255),
+    username varchar(255) NOT NULL UNIQUE,
+    password varchar(255) NOT NULL,
     email varchar(255)
 );
 
