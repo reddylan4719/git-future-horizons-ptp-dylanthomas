@@ -29,3 +29,23 @@ INSERT INTO games (game_name, genre_id, made_by, release_date) VALUES
 ('Final Fantasy XVI', 3, 'Square Enix', '2023-06-22'),
 ('Halo Infinite', 4, '343 Industries', '2021-12-08'),
 ('Fire Emblem: Three Houses', 6, 'Intelligent Systems', '2019-07-26');
+
+-- Insert Tasks for Bob Smith (user_id = 2)
+INSERT INTO tasks (user_id, game_id, progress) VALUES 
+(2, 1, 'complete'),        -- Breath of the Wild
+(2, 2, 'in progress');     -- Elden Ring
+
+-- Insert Tasks for Charlie Lee (user_id = 3)
+INSERT INTO tasks (user_id, game_id, progress) VALUES 
+(3, 3, 'in progress'),     -- Call of Duty: MWII
+(3, 4, 'complete'),        -- Stardew Valley
+(3, 5, 'not started');     -- Civilization VI
+
+-- Insert Tasks for Diana Evans (user_id = 4)
+INSERT INTO tasks (user_id, game_id, progress) VALUES 
+(4, 6, 'not started'),     -- God of War Ragnarok
+(4, 7, 'in progress');     -- Animal Crossing
+
+-- Insert Tasks for Ethan Wong (user_id = 5)
+INSERT INTO tasks (user_id, game_id, progress) VALUES 
+(5, 8, 'complete');        -- Final Fantasy XVI

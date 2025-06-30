@@ -15,7 +15,41 @@ public class UserDao extends TrackerConnection
 	// ------------------------------------------------------------------------
 	// USERS WILL BE ABLE TO UPDATE/CREATE/DELETE THEIR PROFILE, ADD/REMOVE/VIEW/UPDATE THEIR TASKS AND TASK STATUSES, VIEW AVAILABLE GAMES, VIEW GAMES BY SPECIFIC GENRE 
 	// ------------------------------------------------------------------------
+	public User getUsers(String username)
+	{
+		try 
+		{
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
 	
+			stmt.setString(1, username);
+			
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) 
+			{
+				int id = rs.getInt(1);
+				String firstName = rs.getString(2);
+				String lastName = rs.getString(3);
+				username = rs.getString(4);
+				String password = rs.getString(5);
+				String email = rs.getString(6);
+	
+				User user = new User(id, firstName, lastName, username, password, email);	
+				return user;
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println("SQL Exception");
+			System.out.println(e.getMessage());
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+
+
+		return null;
+	}
 	public List<Game> getAllGames() 
 	{
 		try 
@@ -41,7 +75,8 @@ public class UserDao extends TrackerConnection
 		}
 		catch (SQLException e)
 		{
-			e.getMessage();
+			System.out.println("SQL Exception");
+			System.out.println(e.getMessage());
 		} 
 		catch (Exception e) 
 		{
@@ -49,7 +84,7 @@ public class UserDao extends TrackerConnection
 		}
 
 
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<Task> getAllUserTasks(int userID) 
@@ -76,7 +111,8 @@ public class UserDao extends TrackerConnection
 		}
 		catch (SQLException e)
 		{
-			e.getMessage();
+			System.out.println("SQL Exception");
+			System.out.println(e.getMessage());
 		} 
 		catch (Exception e) 
 		{
@@ -84,7 +120,7 @@ public class UserDao extends TrackerConnection
 		}
 
 
-		return null;
+		return new ArrayList<>();
 	}
 
 	public Optional<Game> findGameById(int id) 
@@ -191,7 +227,7 @@ public class UserDao extends TrackerConnection
 	{
 		try 
 		{
-			PreparedStatement stmt = connection.prepareStatement("UPDATE users SET progress = ? WHERE task_id = ?");
+			PreparedStatement stmt = connection.prepareStatement("UPDATE tasks SET progress = ? WHERE task_id = ?");
 			
 			stmt.setString(1, progress);
 			stmt.setInt(2, id);
@@ -275,6 +311,7 @@ public class UserDao extends TrackerConnection
 
 	public void addProfile(User user) throws UserNotCreatedException 
 	{
+		// Only used to create new accounts and by super user
 		try 
 		{
 			// No repeat usernames
@@ -286,7 +323,7 @@ public class UserDao extends TrackerConnection
 			stmt.setString(4, user.getPassword());	
 			stmt.setString(5, user.getEmail());
 			count = stmt.executeUpdate();
-			if (count > 0) 
+			if (count == 0) 
 			{
 				throw new UserNotCreatedException(user);
 			}
@@ -307,12 +344,12 @@ public class UserDao extends TrackerConnection
 		try 
 		{
 			int count;
-			PreparedStatement stmt = connection.prepareStatement("insert into Task(user_id, game_id, progress) values(?, ?, ?)");
+			PreparedStatement stmt = connection.prepareStatement("insert into tasks(user_id, game_id, progress) values(?, ?, ?)");
 			stmt.setInt(1, task.getUserID());
 			stmt.setInt(2, task.getGameID());
 			stmt.setString(3, task.getProgress());
 			count = stmt.executeUpdate();
-			if (count > 0) 
+			if (count == 0) 
 			{
 				throw new TaskNotCreatedException(task);
 			}
@@ -334,7 +371,7 @@ public class UserDao extends TrackerConnection
 		{
 			List<Game> games = new ArrayList<>();
 
-			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM games JOIN genres ON game.genre_id = genres.genre_id WHERE genre_name = ?");
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM games JOIN genres ON games.genre_id = genres.genre_id WHERE genre_name = ?");
 			stmt.setString(1, genreName);
 			ResultSet rs = stmt.executeQuery();
 			
@@ -362,6 +399,6 @@ public class UserDao extends TrackerConnection
 			e.printStackTrace();
 		}
 
-		return null;
+		return new ArrayList<>();
 	}	
 }

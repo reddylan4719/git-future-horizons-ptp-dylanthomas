@@ -45,5 +45,5 @@ create table tasks
       FOREIGN KEY( game_id )
       REFERENCES games( game_id ) 
       ON DELETE CASCADE ON UPDATE CASCADE,
-      progress char
+      progress varchar(20)
 );

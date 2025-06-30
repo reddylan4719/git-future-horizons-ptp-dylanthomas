@@ -19,7 +19,7 @@ VIEW ALL USERS TASKS | Done
 */
 public class SuperUserDoa extends UserDao
 {
-    public List<User> getAllUsers() 
+    public List<User> getUsers() 
 	{
 		try 
 		{
@@ -45,7 +45,7 @@ public class SuperUserDoa extends UserDao
 		}
 		catch (SQLException e)
 		{
-			e.getMessage();
+			System.out.println(e.getMessage());
 		} 
 		catch (Exception e) 
 		{
@@ -53,7 +53,7 @@ public class SuperUserDoa extends UserDao
 		}
 
 
-		return null;
+		return new ArrayList<>();
 	}
 
     public List<Task> getAllUserTasks() 
@@ -80,7 +80,7 @@ public class SuperUserDoa extends UserDao
 		}
 		catch (SQLException e)
 		{
-			e.getMessage();
+			System.out.println(e.getMessage());
 		} 
 		catch (Exception e) 
 		{
@@ -88,7 +88,7 @@ public class SuperUserDoa extends UserDao
 		}
 
 
-		return null;
+		return new ArrayList<>();
 	}
     
     public boolean updateGame(int id, String name, int genreID, String madeBy, Date releasDate) 
@@ -98,9 +98,9 @@ public class SuperUserDoa extends UserDao
 			PreparedStatement stmt = connection.prepareStatement("UPDATE games SET game_name = ?, genre_id = ?, made_by = ?, release_date = ? WHERE game_id = ?");
 			
 			stmt.setString(1, name);
-            stmt.setInt(1, genreID);
-            stmt.setString(1, madeBy);
-            stmt.setDate(1, releasDate);
+			stmt.setInt(2, genreID);
+			stmt.setString(3, madeBy);
+			stmt.setDate(4, releasDate);
 			stmt.setInt(5, id);
 			
 			int count = stmt.executeUpdate();
@@ -215,13 +215,13 @@ public class SuperUserDoa extends UserDao
 		try 
 		{
 			int count;
-			PreparedStatement stmt = connection.prepareStatement("insert into users(game_name, genre_id, made_by, release_date) values(?, ?, ?, ?)");
+			PreparedStatement stmt = connection.prepareStatement("INSERT INTO games(game_name, genre_id, made_by, release_date) VALUES (?, ?, ?, ?)");
 			stmt.setString(1, game.getName());
 			stmt.setInt(2, game.getGenreID());
 			stmt.setString(3, game.getMadeBy());
             stmt.setDate(4, game.getReleasDate());
 			count = stmt.executeUpdate();
-			if (count > 0) 
+			if (count == 0) 
 			{
 				throw new GameNotCreatedException(game);
 			}
@@ -242,10 +242,10 @@ public class SuperUserDoa extends UserDao
 		try 
 		{
 			int count;
-			PreparedStatement stmt = connection.prepareStatement("insert into users(game_name, genre_id, made_by, release_date) values(?, ?, ?, ?)");
+			PreparedStatement stmt = connection.prepareStatement("INSERT INTO genres(genre_name) VALUES (?)");
 			stmt.setString(1, genre.getName());
 			count = stmt.executeUpdate();
-			if (count > 0) 
+			if (count == 0) 
 			{
 				throw new GenreNotCreatedException(genre);
 			}
