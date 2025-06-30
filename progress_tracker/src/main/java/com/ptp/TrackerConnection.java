@@ -27,7 +27,7 @@ public class TrackerConnection
 	{
 		try 
 		{
-			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ? && password = ?");
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?");
 			stmt.setString(1, username);
 			stmt.setString(2, password);
 			ResultSet rs = stmt.executeQuery();
@@ -49,6 +49,7 @@ public class TrackerConnection
 		{
 			System.out.println("SQL Exception");
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} 
 		catch (Exception e) 
 		{

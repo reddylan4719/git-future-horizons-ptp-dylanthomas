@@ -219,7 +219,7 @@ public class SuperUserDoa extends UserDao
 			stmt.setString(1, game.getName());
 			stmt.setInt(2, game.getGenreID());
 			stmt.setString(3, game.getMadeBy());
-            stmt.setDate(4, game.getReleasDate());
+            stmt.setDate(4, game.getReleaseDate());
 			count = stmt.executeUpdate();
 			if (count == 0) 
 			{

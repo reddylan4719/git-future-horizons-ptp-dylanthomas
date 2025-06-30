@@ -8,7 +8,7 @@ public class Game
     private String name;
     private int genreID;
     private String madeBy;
-    private Date releasDate;
+    private Date releaseDate;
     
     public Game(int id, String name, int genreId, String madeBy, Date releasDate) 
     {
@@ -16,7 +16,7 @@ public class Game
         this.name = name;
         this.genreID = genreId;
         this.madeBy = madeBy;
-        this.releasDate = releasDate;
+        this.releaseDate = releasDate;
     }
 
     public int getId() 
@@ -54,20 +54,20 @@ public class Game
         this.madeBy = madeBy;
     }
 
-    public Date getReleasDate() 
+    public Date getReleaseDate() 
     {
-        return releasDate;
+        return releaseDate;
     }
 
-    public void setReleasDate(Date releasDate) 
+    public void setReleaseDate(Date releasDate) 
     {
-        this.releasDate = releasDate;
+        this.releaseDate = releasDate;
     }
 
     @Override
     public String toString() 
     {
         return "Games: id=" + id + ", name=" + name + ", genreId=" + genreID + ", madeBy=" + madeBy + ", releasDate="
-                + releasDate;
+                + releaseDate;
     }
 }
