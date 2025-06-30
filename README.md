@@ -18,7 +18,7 @@ TrackerConnection holds the code responsible for connecting to database and logg
 
 
 
-UserDao extends TrackerConnection and SuperUserDao extends UserDao. UserDao is used for regular users while SuperUserDao is used for 
+UserDao extends TrackerConnection and SuperUserDao extends UserDao. UserDao is used for regular users while SuperUserDao is used for super users.
 
 
 
